@@ -1,5 +1,6 @@
 package it.versionestabile.flutterapp000001;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,10 +15,51 @@ import io.flutter.plugins.GeneratedPluginRegistrant;
 
 public class MainActivity extends FlutterActivity {
   private static final String CHANNEL = "it.versionestabile.flutterapp000001/pdfViewer";
+  private static final String SINGLE_CHANNEL = "it.versionestabile.flutterapp000001/single";
+  private static final String MULTI_CHANNEL = "it.versionestabile.flutterapp000001/multi";
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     GeneratedPluginRegistrant.registerWith(this);
+
+    new MethodChannel(getFlutterView(), MULTI_CHANNEL).setMethodCallHandler(
+            new MethodChannel.MethodCallHandler() {
+              @Override
+              public void onMethodCall(MethodCall call, MethodChannel.Result result) {
+                if (call.method.equals("op1")) {
+                  new AlertDialog.Builder(MainActivity.this)
+                          .setTitle(call.method)
+                          .setMessage("I'm the " + call.method + " of the by design multi operation channel!")
+                          .create()
+                          .show();
+                } else if (call.method.equals("op2")) {
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle(call.method)
+                            .setMessage("I'm the " + call.method + " of the by design multi operation channel!")
+                            .create()
+                            .show();
+                } else {
+                  result.notImplemented();
+                }
+              }
+            });
+
+    new MethodChannel(getFlutterView(), SINGLE_CHANNEL).setMethodCallHandler(
+            new MethodChannel.MethodCallHandler() {
+              @Override
+              public void onMethodCall(MethodCall call, MethodChannel.Result result) {
+                if (call.method.equals("hello")) {
+                  new AlertDialog.Builder(MainActivity.this)
+                          .setTitle("hello!")
+                          .setMessage("I'm the by design single operation channel!")
+                          .create()
+                          .show();
+                } else {
+                  result.notImplemented();
+                }
+              }
+            });
 
     new MethodChannel(getFlutterView(), CHANNEL).setMethodCallHandler(
             new MethodChannel.MethodCallHandler() {

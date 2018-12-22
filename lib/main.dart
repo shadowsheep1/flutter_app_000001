@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
     _disableDebugPrint();
     final wordPair = new WordPair.random();
     return new MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Welcome to Flutter',
       theme: new ThemeData(
         primaryColor: Colors.white,
@@ -58,6 +59,10 @@ class RandomWordsState extends State<RandomWords> {
 
   static const platform =
       const MethodChannel('it.versionestabile.flutterapp000001/pdfViewer');
+  static const singleChannel =
+      const MethodChannel('it.versionestabile.flutterapp000001/single');
+  static const multiChannel =
+      const MethodChannel('it.versionestabile.flutterapp000001/multi');
 
   @override
   initState() {
@@ -75,6 +80,23 @@ class RandomWordsState extends State<RandomWords> {
         ],
       ),
       body: _buildSuggestions(),
+      floatingActionButton: SafeArea(
+        child: Padding(
+            padding: EdgeInsets.only(left: 8.0),
+            child: Row(
+              children: <Widget>[
+                new IconButton(
+                    icon: new Icon(Icons.library_music),
+                    onPressed: _invokeMultiChannelOp1),
+                new IconButton(
+                    icon: new Icon(Icons.note),
+                    onPressed: _invokeMultiChannelOp2),
+                new IconButton(
+                    icon: new Icon(Icons.plus_one),
+                    onPressed: _invokeSingleChannel),
+              ],
+            )),
+      ),
     );
   }
 
@@ -92,12 +114,10 @@ class RandomWordsState extends State<RandomWords> {
               );
             },
           );
-          final divided = ListTile
-              .divideTiles(
-                context: context,
-                tiles: tiles,
-              )
-              .toList();
+          final divided = ListTile.divideTiles(
+            context: context,
+            tiles: tiles,
+          ).toList();
           return new Scaffold(
             appBar: new AppBar(
               title: new Text('Saved Suggestions'),
@@ -198,12 +218,10 @@ class RandomWordsState extends State<RandomWords> {
 
   _initPlatformState() async {
     if (Platform.isAndroid) {
-      SimplePermissions
-          .checkPermission(Permission.WriteExternalStorage)
+      SimplePermissions.checkPermission(Permission.WriteExternalStorage)
           .then((checkOkay) {
         if (!checkOkay) {
-          SimplePermissions
-              .requestPermission(Permission.WriteExternalStorage)
+          SimplePermissions.requestPermission(Permission.WriteExternalStorage)
               .then((okDone) {
             if (okDone != null && okDone == PermissionStatus.authorized) {
               debugPrint("${okDone}");
@@ -221,5 +239,17 @@ class RandomWordsState extends State<RandomWords> {
         }
       });
     }
+  }
+
+  void _invokeMultiChannelOp2() {
+    multiChannel.invokeMethod('op2');
+  }
+
+  void _invokeMultiChannelOp1() {
+    multiChannel.invokeMethod('op1');
+  }
+
+  void _invokeSingleChannel() {
+    singleChannel.invokeMethod('hello');
   }
 }
