@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
@@ -11,12 +12,20 @@ import 'package:simple_permissions/simple_permissions.dart';
 
 String selectedUrl = "https://flutter.io";
 bool externalStoragePermissionOkay = false;
+bool disableDebugPrint = false;
 
 void main() => runApp(new MyApp());
+
+void _disableDebugPrint() {
+  if (disableDebugPrint) {
+    debugPrint = (String message, {int wrapWidth}) {};
+  }
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    _disableDebugPrint();
     final wordPair = new WordPair.random();
     return new MaterialApp(
       title: 'Welcome to Flutter',
@@ -196,10 +205,10 @@ class RandomWordsState extends State<RandomWords> {
           SimplePermissions
               .requestPermission(Permission.WriteExternalStorage)
               .then((okDone) {
-            if (okDone) {
+            if (okDone != null && okDone == PermissionStatus.authorized) {
               debugPrint("${okDone}");
               setState(() {
-                externalStoragePermissionOkay = okDone;
+                externalStoragePermissionOkay = true;
                 debugPrint('Refresh UI');
               });
             }
@@ -207,6 +216,7 @@ class RandomWordsState extends State<RandomWords> {
         } else {
           setState(() {
             externalStoragePermissionOkay = checkOkay;
+            debugPrint('Test');
           });
         }
       });
