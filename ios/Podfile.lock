@@ -1,0 +1,40 @@
+PODS:
+  - Flutter (1.0.0)
+  - flutter_webview_plugin (0.0.1):
+    - Flutter
+  - path_provider (0.0.1):
+    - Flutter
+  - simple_permissions (0.0.1):
+    - Flutter
+  - url_launcher (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Pods/.symlinks/flutter/ios`)
+  - "flutter_webview_plugin (from `Pods/.symlinks/plugins/flutter_webview_plugin-0.3.0+2/ios`)"
+  - path_provider (from `Pods/.symlinks/plugins/path_provider-0.4.1/ios`)
+  - simple_permissions (from `Pods/.symlinks/plugins/simple_permissions-0.1.9/ios`)
+  - url_launcher (from `Pods/.symlinks/plugins/url_launcher-4.0.3/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Pods/.symlinks/flutter/ios
+  flutter_webview_plugin:
+    :path: "Pods/.symlinks/plugins/flutter_webview_plugin-0.3.0+2/ios"
+  path_provider:
+    :path: Pods/.symlinks/plugins/path_provider-0.4.1/ios
+  simple_permissions:
+    :path: Pods/.symlinks/plugins/simple_permissions-0.1.9/ios
+  url_launcher:
+    :path: Pods/.symlinks/plugins/url_launcher-4.0.3/ios
+
+SPEC CHECKSUMS:
+  Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
+  flutter_webview_plugin: 0b491d31c34ab5c86a71c9f1a57ac000dd1b75e9
+  path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
+  simple_permissions: 8ea52208b437f8fae29d97a55fe00b705a53246b
+  url_launcher: 92b89c1029a0373879933c21642958c874539095
+
+PODFILE CHECKSUM: 71d7daa1033253c3487980d3842fe4b242b1a177
+
+COCOAPODS: 1.5.3
